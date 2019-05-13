@@ -6,16 +6,18 @@ import EachTodo from './EachTodo';
 
 class TodoList extends React.Component {
   state = {
-    newTodoText: ''
+    value: '',
+    completed: false
   }
 
   handleChanges = (event) => {
-    this.setState({ newTodoText: event.target.value })
+    this.setState({ value: event.target.value })
   }
 
   addNewTodoText = (event) => {
     event.preventDefault();
-    this.props.addNewTodo(this.state.newTodoText);
+    this.props.addNewTodo(this.state);
+    console.log(this.props.todos);
   }
 
   render() {
@@ -43,4 +45,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, addNewTodo)(TodoList);
+export default connect(mapStateToProps, { addNewTodo })(TodoList);
