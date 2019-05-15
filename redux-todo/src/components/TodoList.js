@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addNewTodo } from '../actions';
+import { addNewTodo, toggleCompleteTask } from '../actions';
 import EachTodo from './EachTodo';
 
 class TodoList extends React.Component {
   state = {
     value: '',
-    completed: false
+    completed: false,
   }
 
   handleChanges = (event) => {
@@ -20,11 +20,15 @@ class TodoList extends React.Component {
     console.log(this.props.todos);
   }
 
+  completeTodo = () => {
+    this.props.toggleCompleteTask()
+  }
+
   render() {
     return (
       <div>
-        {this.props.todos.map((eachTodo, index) => {
-          return <EachTodo eachTodo={eachTodo} key={index} />
+        {this.props.todos.map(eachTodo => {
+          return <EachTodo eachTodo={eachTodo} key={eachTodo.id} completeTodo={this.completeTodo} />
         })}
         <input
           type='text'
@@ -45,4 +49,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { addNewTodo })(TodoList);
+export default connect(mapStateToProps, { addNewTodo, toggleCompleteTask })(TodoList);
